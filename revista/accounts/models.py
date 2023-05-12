@@ -5,13 +5,13 @@ from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 
 class User(AbstractUser):
-    birth_date = models.DateField()
-    phone_number = PhoneNumberField(null=False, blank=False, unique=True)
+    birth_date = models.DateField(null=True)
+    phone_number = PhoneNumberField(null=True, blank=False, unique=True)
     gender_choices = [
         ('M', 'Male'),
         ('F', 'Female'),
     ]
-    gender = models.CharField(max_length=1, choices=gender_choices)
+    gender = models.CharField(null=True, max_length=1, choices=gender_choices)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
