@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2acebaac1e9da34a8b5e6ceb68cef912d6615ffbccdc40858c7ebe40933f243c"
+            "sha256": "0a50d5d4e433953581c3f9e60953ed304874c5a93f321dc0ec8b0bfb79cddfa0"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -229,6 +229,14 @@
             "index": "pypi",
             "version": "==0.54.0"
         },
+        "django-cors-headers": {
+            "hashes": [
+                "sha256:a971cd4c75b29974068cc36b5c595698822f1e0edd5f1b32ea42ea37326ad4aa",
+                "sha256:e3cbd247a1a835da4cf71a70d4214378813ea7e08337778b82cb2c1bc19d28d6"
+            ],
+            "index": "pypi",
+            "version": "==4.0.0"
+        },
         "django-phonenumber-field": {
             "extras": [
                 "phonenumberslite"
@@ -247,6 +255,14 @@
             ],
             "index": "pypi",
             "version": "==3.14.0"
+        },
+        "djangorestframework-simplejwt": {
+            "hashes": [
+                "sha256:4c0d2e2513e12587d93501ac091781684a216c3ee614eb3b5a10586aef5ca845",
+                "sha256:d27d4bcac2c6394f678dea8b4d0d511c6e18a7f2eb8aaeeb8a7de601aeb77c42"
+            ],
+            "index": "pypi",
+            "version": "==5.2.2"
         },
         "idna": {
             "hashes": [

@@ -13,8 +13,8 @@ SECRET_KEY = 'django-insecure-_(z1al=%jaejc%p=zg2=8!66t7)@6n=hvsh6@q7f^)d(zju!%d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['192.168.43.231']
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     
     # Third-party apps
     'rest_framework',
+    'rest_framework_simplejwt',
+    'corsheaders',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -39,6 +41,13 @@ INSTALLED_APPS = [
     'main',
     'accounts',
 ]
+
+# jwt
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+       	'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 # allauth
 AUTHENTICATION_BACKENDS = [
@@ -71,6 +80,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'revista.urls'
@@ -163,3 +174,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+#EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'reham.shaban2002@gmail.com'
+EMAIL_HOST_PASSWORD = 'jqeevcadwnxnpzel'

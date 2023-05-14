@@ -4,13 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
 djangorestframework = "*"
 mysqlclient = "*"
 phonenumbers = "*"
 django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
 django-allauth = "*"
 pillow = "*"
+djangorestframework-simplejwt = "*"
+django-cors-headers = "*"
+django = "*"
 
 [dev-packages]
 
