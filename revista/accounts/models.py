@@ -3,9 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import MinLengthValidator
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 
 # Create your models here.
@@ -37,28 +34,11 @@ class User(AbstractUser):
         )
     birth_date = models.DateField(null=True, blank=True)
     phone_number = PhoneNumberField(null=True, blank=True, unique=True)
-    password = models.CharField(
-        _("password"),
-        max_length=128,
-        null=False,
-        blank=False,
-        validators=[MinLengthValidator(8)],
-        error_messages={
-            "min_length": _("The password must have at least 8 characters."),
-        },
-    )
+
     gender_choices = [("M", "Male"), ("F", "Female")]
     gender = models.CharField(
         _("gender"), max_length=1, null=True, blank=True, choices=gender_choices
     )
-
-    def clean(self):
-        super().clean()
-        if self.password:
-            try:
-                validate_password(self.password)
-            except ValidationError as e:
-                raise ValidationError({"password": e.messages})
 
     def __str__(self):
         return self.username
