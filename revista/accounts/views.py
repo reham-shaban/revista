@@ -5,13 +5,13 @@ from django.core.mail import send_mail
 import random
 from django.forms import ValidationError
 
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import PasswordResetCode, User
-
+from .serializers import UserSerializer
 # Create your views here.
 
 # login class view
@@ -143,5 +143,20 @@ class ResetPasswordView(APIView):
         
         return Response({"message" : "successful"}, status=status.HTTP_200_OK)
 
+#Register class view
+class UserCreateView (generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
 
-        
+    
+    
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        return serializer.save()

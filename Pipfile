@@ -10,6 +10,7 @@ phonenumbers = "*"
 django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
 django-allauth = "*"
 pillow = "*"
+django-password-validators = "*"
 djangorestframework-simplejwt = "*"
 django-cors-headers = "*"
 django = "*"

@@ -1,19 +1,67 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.validators import MinLengthValidator
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
 # Create your models here.
 
 class User(AbstractUser):
-    birth_date = models.DateField(null=True)
-    phone_number = PhoneNumberField(null=True, blank=False, unique=True)
-    gender_choices = [
-        ('M', 'Male'),
-        ('F', 'Female'),
-    ]
-    gender = models.CharField(null=True, max_length=1, choices=gender_choices)
+    first_name = models.CharField(_("first name"), max_length=150, blank=False, null=False)
+    last_name = models.CharField(_("last name"), max_length=150, blank=True, null=True)
+    username = models.CharField(
+        _("username"),
+        max_length=150,
+        unique=True,
+        help_text=_(
+            "Required. in range of (4-150) characters. Letters, digits and @/./+/-/_ only."
+        ),
+        validators=[MinLengthValidator(4)],
+        error_messages={
+            "uniqe": _("This username already exists."),
+            "min_length": _("The username must have at least 4 characters."),
+        },
+        blank=False,
+    )
+    email = models.EmailField(
+        _("email address"),
+        unique=True,
+        blank=False,        
+        error_messages={
+            "uniqe": _("This email is already linked to an account."),
+        },
+        )
+    birth_date = models.DateField(null=True, blank=True)
+    phone_number = PhoneNumberField(null=True, blank=True, unique=True)
+    password = models.CharField(
+        _("password"),
+        max_length=128,
+        null=False,
+        blank=False,
+        validators=[MinLengthValidator(8)],
+        error_messages={
+            "min_length": _("The password must have at least 8 characters."),
+        },
+    )
+    gender_choices = [("M", "Male"), ("F", "Female")]
+    gender = models.CharField(
+        _("gender"), max_length=1, null=True, blank=True, choices=gender_choices
+    )
+
+    def clean(self):
+        super().clean()
+        if self.password:
+            try:
+                validate_password(self.password)
+            except ValidationError as e:
+                raise ValidationError({"password": e.messages})
+
+    def __str__(self):
+        return self.username
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')

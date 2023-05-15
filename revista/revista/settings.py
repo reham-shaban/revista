@@ -124,9 +124,9 @@ WSGI_APPLICATION = 'revista.wsgi.application'
 DATABASES = {
     'default': {   
         'ENGINE': 'django.db.backends.mysql',   
-        'NAME': 'project1',   
+        'NAME': 'revista',   
         'USER': 'root',   
-        'PASSWORD': '3028',   
+        'PASSWORD': 'root1234',#reham's: 3028 #aamir's :root1234  
         'HOST': '127.0.0.1',   
         'PORT': '3306',   
         'OPTIONS': {   
